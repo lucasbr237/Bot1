@@ -192,7 +192,7 @@ def main():
         daily()
     setInterval(12 * 60 * 60, daily)
     setInterval(refresh_time, update_init_total_coin)
-    setInterval(80, clicker)
+    setInterval(300, clicker)
 
 
 main()
