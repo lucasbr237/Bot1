@@ -30,7 +30,7 @@ def request_api(path, prefix="clicker", json_data={}):
         r = requests.post(
             f"https://api.hamsterkombat.io/{prefix}/{path}", headers={
                 "Content-Type": "application/json",
-                "Authorization": "Bearer 1719687415235aHv0gr7u8IZpAeOGhHN5cblG56p5FjEDBaB44dhF8kOP3Dg05fEkNruAf2NwBJUv7106749488"
+                "Authorization": "Bearer 1720628320300vDnyXDC6F8GuXZnsQIzH2a573qXLeXH9rpZBgq1KJkGe8c0cN5aml3EUsbBf9nUB5339398920"
             },
             json=json_data
         )
