@@ -15,6 +15,12 @@ refresh_time = 2 * 3600 + 50 * 60
 percentage_use_for_upgrade = 0
 percentage_use_for_boost = 0
 
+# Token para a primeira chamada
+token1 = "1720628320300vDnyXDC6F8GuXZnsQIzH2a573qXLeXH9rpZBgq1KJkGe8c0cN5aml3EUsbBf9nUB5339398920"
+
+# Token para a segunda chamada
+token2 = "1719687415235aHv0gr7u8IZpAeOGhHN5cblG56p5FjEDBaB44dhF8kOP3Dg05fEkNruAf2NwBJUv7106749488"
+
 priority = ["Markets"]
 # Example of priority upgrade option
 # priority = [] # for all upgrade section
@@ -25,12 +31,12 @@ priority = ["Markets"]
 
 
 
-def request_api(path, prefix="clicker", json_data={}):
+def request_api(path, prefix="clicker", json_data={}, token=token1):
     try:
         r = requests.post(
             f"https://api.hamsterkombat.io/{prefix}/{path}", headers={
                 "Content-Type": "application/json",
-                "Authorization": "Bearer 1720628320300vDnyXDC6F8GuXZnsQIzH2a573qXLeXH9rpZBgq1KJkGe8c0cN5aml3EUsbBf9nUB5339398920"
+                "Authorization": f"Bearer {token}"
             },
             json=json_data
         )
@@ -97,12 +103,12 @@ def boost():
     global init_total_coin, percentage_use_for_boost
     budget = init_total_coin * percentage_use_for_boost / 100
     spent = 0
-    res = request_api("boosts-for-buy")["boostsForBuy"]
+    res = request_api("boosts-for-buy", token=token2)["boostsForBuy"]
     base_upgrade = res[-1]["level"] + 1
     for boost in res:
         if boost["id"] not in ["BoostFullAvailableTaps","BoostEarnPerTap"] and boost["price"] <= budget and boost["level"] < base_upgrade:
             request_api(
-                "buy-boost", json_data={"boostId": boost["id"], "timestamp": int(datetime.now().timestamp())})
+                "buy-boost", json_data={"boostId": boost["id"], "timestamp": int(datetime.now().timestamp())}, token=token2)
             print(f"{Fore.MAGENTA}Upgraded boost {boost['id']} to level {boost['level']+1}")
             budget -= boost["price"]
             spent += boost["price"]
